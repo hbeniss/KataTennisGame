@@ -72,14 +72,17 @@ player2.setGameScore(40);
         gameLogiqImp.addPlayer(player2.getName());
 
         player1.setGameScore(40);
-        player2.setGameScore(15);
-        player1.setGagneLeSet(false);
-        player1.setSetScore(5);
-        player2.setSetScore(4);
+        player2.setGameScore(0);
+       // player1.setGagneLeSet(false);
+        player1.setTieBreak(true);
+        player1.setSetScore(6);
+        player2.setSetScore(6);
+        gameLogiqImp.gagneLePoint(player2);
 gameLogiqImp.gagneLePoint(player1);
       //  assertEquals(player1.getGameScore(),40);
-        assertTrue(player1.isGagneLeSet());
+      //  assertTrue(player1.isGagneLeSet());
       //  assertEquals(player1.getSetScore(),6);
+        //assertTrue(player1.isTieBreak());
     }
 
 }

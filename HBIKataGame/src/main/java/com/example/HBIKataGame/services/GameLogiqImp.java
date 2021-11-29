@@ -54,33 +54,41 @@ for(Map.Entry<String,Player> entry : players.entrySet()){
         return null;
     }
     @Override
-    public void winPointSet(Player player) {
+    public void winPointSet(Player player,Player adversaire) {
+
+        player.setGameScore(0);
+        player.setAvantage(false);
+        player.setDuce(false);
+        adversaire.setGameScore(0);
+        adversaire.setAvantage(false);
+        adversaire.setDuce(false);
 
         int currentSetScore = player.getSetScore();
-        Player adversaire = getAdverse(player);
-        int nextSetScore = player.getSetScore()+1;
+        //Player adversaire = getAdverse(player);
 
-        if(!player.isTieBreak()){
-            if(nextSetScore==7){
-                player.setGagneLeSet(true);
-                System.out.println("Wooooon");
-            }
-             if((nextSetScore == 6)&&(adversaire.getSetScore()<=4)){
-                //win & break
-                player.setGagneLeSet(true);
-                System.out.println("Wooooon");
-                //inti all
-            }
-            else if(currentSetScore<=6){
-                player.setSetScore(nextSetScore);
-            }
+        int  nextSetScore = currentSetScore+1;
 
-            else if((currentSetScore<7) && (adversaire.getSetScore()>=5)){
-                player.setSetScore(nextSetScore);
+        System.out.println("player1  "+player.getSetScore());
+        System.out.println("player2  "+adversaire.getSetScore());
+if(!player.isTieBreak()) {
+    if (nextSetScore >= 6) {
+        if (adversaire.getSetScore() <= 4) {
+            System.out.println("win 1");
+        } else if (currentSetScore >= 6 && adversaire.getSetScore() >= 6) {
+            System.out.println("TieBreak");
+            player.setTieBreak(true);
+            adversaire.setTieBreak(true);
+            player.setSetScore(nextSetScore);
+            if (currentSetScore >= 7 && currentSetScore - adversaire.getSetScore() > 2) {
+                System.out.println("Win2 by TieBreak");
             }
-
-
-        }
+        } else
+            System.out.println("hhh-------hhh");
+            player.setSetScore(nextSetScore);
+            System.out.println("hhh-------hhh");
+    }
+   player.setSetScore(nextSetScore);
+}
     }
     @Override
     public void gagneLePoint(Player player) {
@@ -90,45 +98,31 @@ for(Map.Entry<String,Player> entry : players.entrySet()){
 
         if(player.isAvantage() ){
             //System.out.println("player Avantage = "+player.isAvantage());
-            winPointSet(player);
-            player.setGameScore(0);
-            player.setAvantage(false);
-            player.setDuce(false);
-            adversaire.setGameScore(0);
-            adversaire.setAvantage(false);
-            adversaire.setDuce(false);
+
+            winPointSet(player,adversaire);
+
+
+        }
+        if(!player.isAvantage() ) {
+            // player.setGameScore(newScore);
+            if (currentScore != 40) {
+                player.setGameScore(newScore);
+                if ((adversaire.getGameScore() == 40) && (newScore == 40)) {
+                    duce(player);
+                }
+            }
+                if ((currentScore == 40)) {
+                    if (adversaire.getGameScore() < 40) {
+                        winPointSet(player, adversaire);
+                    } else if (player.isDuce()) {
+                        avantage(player);
+                    } else if (adversaire.getGameScore() == 40 && (adversaire.isAvantage())) {
+                        duce(player);
+                    }
+                }
 
         }
 
-       // player.setGameScore(newScore);
-        if(currentScore!=40){
-            player.setGameScore(newScore);
-            if((adversaire.getGameScore()==40)&&(newScore==40)){
-                duce(player);
-            }
-        }
-        if(!player.isAvantage()){
-
-        if((currentScore == 40)) {
-            if(adversaire.getGameScore()<40){
-                winPointSet(player);
-                player.setGameScore(0);
-                player.setAvantage(false);
-                player.setDuce(false);
-                adversaire.setGameScore(0);
-                adversaire.setAvantage(false);
-                adversaire.setDuce(false);
-            }
-
-
-            else if(player.isDuce()){
-                avantage(player);
-            }
-            else if (adversaire.getGameScore()==40 && (adversaire.isAvantage())){
-                duce(player);
-            }
-        }
-        }
     }
 
     public void duce (Player player){
