@@ -59,22 +59,26 @@ for(Map.Entry<String,Player> entry : players.entrySet()){
         int currentSetScore = player.getSetScore();
         Player adversaire = getAdverse(player);
         int nextSetScore = player.getSetScore()+1;
-        if(!player.isTieBreak()) {
-            if (nextSetScore < 6) {
-                player.setSetScore(nextSetScore);
 
-            }
-            if((nextSetScore==6) && (adversaire.getSetScore()<=4)){
-                System.out.println("le set est fini");
+        if(!player.isTieBreak()){
+            if(nextSetScore==7){
                 player.setGagneLeSet(true);
+                System.out.println("Wooooon");
+            }
+             if((nextSetScore == 6)&&(adversaire.getSetScore()<=4)){
+                //win & break
+                player.setGagneLeSet(true);
+                System.out.println("Wooooon");
+                //inti all
+            }
+            else if(currentSetScore<=6){
                 player.setSetScore(nextSetScore);
-
-                //startNewGame();
             }
 
+            else if((currentSetScore<7) && (adversaire.getSetScore()>=5)){
+                player.setSetScore(nextSetScore);
+            }
 
-        }
-        else if(player.isTieBreak()){
 
         }
     }
