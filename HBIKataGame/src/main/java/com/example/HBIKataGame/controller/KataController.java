@@ -15,8 +15,8 @@ public class KataController {
     private GameLogique gameLogique;
 
     @RequestMapping(value ="/addplayer",method = RequestMethod.POST)
-    public ResponseEntity<?>  addplayer(@RequestBody String playerName) throws  Exception{
-        gameLogique.addPlayer(playerName);
+    public ResponseEntity<?>  addplayer(@RequestBody Player newplayer) throws  Exception{
+        gameLogique.addPlayer(newplayer);
         return ResponseEntity.ok().build();
     }
     @RequestMapping({"/addpoint/{playername}"})
