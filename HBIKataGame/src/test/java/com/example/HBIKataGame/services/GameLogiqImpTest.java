@@ -2,14 +2,17 @@ package com.example.HBIKataGame.services;
 
 import com.example.HBIKataGame.entites.Player;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.mockito.InjectMocks;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 
 class GameLogiqImpTest {
 
-    @Mock
+    @InjectMocks
     GameLogiqImp gameLogiqImp = new GameLogiqImp();
+
 
     @Test
     void getAdverse() {
@@ -17,10 +20,12 @@ class GameLogiqImpTest {
         player1.setName("hello");
         Player player2 = new Player();
         player2.setName("bb");
-        gameLogiqImp.addPlayer(player1.getName());
-        gameLogiqImp.addPlayer(player2.getName());
-
-        assertEquals(this.gameLogiqImp.getAdverse(player1),player2);
+        player2.setSetScore(5);
+        player1.setSetScore(4);
+        gameLogiqImp.addPlayer(player1);
+        gameLogiqImp.addPlayer(player2);
+System.out.println("From test "+player2.getSetScore());
+        assertEquals(gameLogiqImp.getAdverse(player1).getSetScore(),player2.getSetScore());
     }
 
     @Test
@@ -31,8 +36,8 @@ class GameLogiqImpTest {
         player2.setName("P2");
 
 
-        gameLogiqImp.addPlayer(player1.getName());
-        gameLogiqImp.addPlayer(player2.getName());
+        gameLogiqImp.addPlayer(player1);
+        gameLogiqImp.addPlayer(player2);
 
 
         gameLogiqImp.duce(player1);
@@ -51,8 +56,8 @@ class GameLogiqImpTest {
         player2.setName("P2");
 
 
-        gameLogiqImp.addPlayer(player1.getName());
-        gameLogiqImp.addPlayer(player2.getName());
+        gameLogiqImp.addPlayer(player1);
+        gameLogiqImp.addPlayer(player2);
 
 player1.setGameScore(30);
 player2.setGameScore(40);
@@ -62,27 +67,48 @@ player2.setGameScore(40);
     }
     @Test
     void winPoint(){
+
+
         Player player1 = new Player();
         player1.setName("P1");
         Player player2 = new Player();
         player2.setName("P2");
-
-
-        gameLogiqImp.addPlayer(player1.getName());
-        gameLogiqImp.addPlayer(player2.getName());
-
         player1.setGameScore(40);
         player2.setGameScore(0);
+        //player1.setTieBreak(true);
+        player1.setSetScore(5);
+        player2.setSetScore(5);
+        gameLogiqImp.addPlayer(player1);
+        gameLogiqImp.addPlayer(player2);
+        gameLogiqImp.winPointSet(player2);
+        assertEquals(player2.getSetScore(),6);
+
+//        gameLogiqImp.addPlayer(player1.getName());
+//        gameLogiqImp.addPlayer(player2.getName());
        // player1.setGagneLeSet(false);
-        player1.setTieBreak(true);
-        player1.setSetScore(6);
-        player2.setSetScore(6);
-        gameLogiqImp.gagneLePoint(player2);
-gameLogiqImp.gagneLePoint(player1);
-      //  assertEquals(player1.getGameScore(),40);
+
+//       gameLogiqImp.gagneLePoint(player2);
+//        System.out.println("from test "+gameLogiqImp.getAdverse(player1).getSetScore());
+//       assertEquals(player2.getGameScore(),15);
       //  assertTrue(player1.isGagneLeSet());
-      //  assertEquals(player1.getSetScore(),6);
         //assertTrue(player1.isTieBreak());
     }
+/*
+    @Test
+    void getAdvSetScore () {
+        Player player1 = new Player();
+        player1.setName("P1");
+        Player player2 = new Player();
+        player2.setName("P2");
+        player1.setGameScore(40);
+        player2.setGameScore(0);
+        //player1.setTieBreak(true);
+        player1.setSetScore(5);
+        player2.setSetScore(5);
+        gameLogiqImp.addPlayer(player1);
+        gameLogiqImp.addPlayer(player2);
+
+        assertEquals(gameLogiqImp.returnAdverseSet(player1),player2.getSetScore());
+    }*/
 
 }
