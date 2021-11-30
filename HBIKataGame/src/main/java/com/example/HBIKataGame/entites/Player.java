@@ -2,7 +2,10 @@ package com.example.HBIKataGame.entites;
 
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.validation.constraints.NotNull;
 
 
@@ -11,6 +14,8 @@ import javax.validation.constraints.NotNull;
     public class Player {
         @NotNull
         private String name;
+        @Id
+        @GeneratedValue(strategy= GenerationType.AUTO)
         private int index;
         private int gameScore ;
         private int setScore ;
