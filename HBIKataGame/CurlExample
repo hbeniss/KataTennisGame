@@ -1,8 +1,0 @@
-curl -X POST \
-  http://localhost:8080/addplayer \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -H 'postman-token: 13007957-213a-9b3c-e750-45a167cc5a1e' \
-  -d '{
-	"name":"hamza"
-}'
